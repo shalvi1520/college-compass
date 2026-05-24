@@ -24,6 +24,7 @@ export interface College {
   established: number
   ranking: {
     nirf: number
+    qs?: number
   }
   image: string
   description: string
