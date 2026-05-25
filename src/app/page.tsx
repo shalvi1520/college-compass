@@ -45,7 +45,7 @@ export default function Home() {
             <p className="text-sm text-[var(--text-muted)] mt-1">Top Colleges</p>
           </div>
           <div>
-            <p className="font-display text-3xl font-bold text-[var(--amber)]">₹28Cr</p>
+            <p className="font-display text-3xl font-bold text-[var(--amber)]">₹2Cr</p>
             <p className="text-sm text-[var(--text-muted)] mt-1">Highest Package</p>
           </div>
           <div>
