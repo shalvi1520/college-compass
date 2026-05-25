@@ -24,7 +24,35 @@ export default async function CollegeDetail({
   if (!college) notFound()
 
   return (
+
     <div className="max-w-5xl mx-auto px-4 py-8">
+
+      {/* breadcrumb navigation */}
+      <nav className="flex items-center gap-2 text-sm mb-4 text-[var(--text-muted)]">
+
+        <Link
+          href="/"
+          className="hover:text-white transition-colors"
+        >
+          Home
+        </Link>
+
+        <span>/</span>
+
+        <Link
+          href="/colleges"
+          className="hover:text-white transition-colors"
+        >
+          Colleges
+        </Link>
+
+        <span>/</span>
+
+        <span className="text-[var(--amber)] font-medium">
+          {college.shortName}
+        </span>
+
+      </nav>
 
       {/* back button */}
       <Link
@@ -38,10 +66,6 @@ export default async function CollegeDetail({
       {/* hero image */}
       <div className="relative rounded-2xl overflow-hidden h-56 sm:h-72 mb-8">
 
-        {/* IMPORTANT:
-            removed onError because server components
-            cannot use event handlers in Next.js 16
-        */}
         <img
           src={college.image}
           alt={college.name}
@@ -67,11 +91,15 @@ export default async function CollegeDetail({
           </p>
 
           <div className="flex items-center gap-1 mt-2 text-sm text-[var(--text-muted)]">
+
             <MapPin className="w-3.5 h-3.5" />
+
             {college.location}
+
           </div>
 
         </div>
+
       </div>
 
       {/* main layout */}
@@ -371,5 +399,6 @@ export default async function CollegeDetail({
       </div>
 
     </div>
+
   )
 }
