@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { colleges } from "@/data/colleges"
 import { FilterState } from "@/types"
 import CollegeCard from "@/components/colleges/CollegeCard"
 import Link from "next/link"
-import { Search, X, SlidersHorizontal } from "lucide-react"
+import { Search, X } from "lucide-react"
 
 const defaultFilters: FilterState = {
   search: "",
@@ -16,6 +16,7 @@ const defaultFilters: FilterState = {
 }
 
 const allTypes = ["IIT", "NIT", "IIIT", "Deemed", "State"]
+
 const allStates = [...new Set(colleges.map(c => c.state))].sort()
 
 export default function CollegesPage() {
@@ -26,7 +27,12 @@ export default function CollegesPage() {
 
   const [showFilters, setShowFilters] = useState(false)
 
-  // filter and sort logic
+  // pagination state
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const collegesPerPage = 6
+
+  // filtering and sorting
   const filtered = useMemo(() => {
 
     let list = [...colleges]
@@ -41,6 +47,7 @@ export default function CollegesPage() {
         c.shortName.toLowerCase().includes(q) ||
         c.city.toLowerCase().includes(q)
       )
+
     }
 
     // type filter
@@ -73,13 +80,28 @@ export default function CollegesPage() {
         return b.placements.averagePackage - a.placements.averagePackage
       }
 
-      // default sort by NIRF rank
+      // default sort
       return a.ranking.nirf - b.ranking.nirf
 
     })
 
     return list
 
+  }, [filters])
+
+  // pagination calculations
+  const totalPages = Math.ceil(filtered.length / collegesPerPage)
+
+  const startIndex = (currentPage - 1) * collegesPerPage
+
+  const paginatedColleges = filtered.slice(
+    startIndex,
+    startIndex + collegesPerPage
+  )
+
+  // reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1)
   }, [filters])
 
   // compare logic
@@ -101,7 +123,7 @@ export default function CollegesPage() {
 
   }
 
-  // type filter toggle
+  // type toggle
   function toggleType(type: string) {
 
     setFilters(f => ({
@@ -113,7 +135,7 @@ export default function CollegesPage() {
 
   }
 
-  // state filter toggle
+  // state toggle
   function toggleState(state: string) {
 
     setFilters(f => ({
@@ -178,12 +200,12 @@ export default function CollegesPage() {
 
       <div className="flex gap-6">
 
-        {/* sidebar filters */}
+        {/* sidebar */}
         <aside className="hidden lg:block w-56 flex-shrink-0">
 
           <div className="bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-4 sticky top-20">
 
-            {/* sorting */}
+            {/* sort */}
             <p className="text-xs font-medium text-[var(--text-muted)] uppercase tracking-wider mb-3">
               Sort
             </p>
@@ -293,7 +315,7 @@ export default function CollegesPage() {
 
         </aside>
 
-        {/* college grid */}
+        {/* main content */}
         <div className="flex-1">
 
           {filtered.length === 0 ? (
@@ -302,23 +324,19 @@ export default function CollegesPage() {
 
               <div className="max-w-md w-full bg-[var(--card-bg)] border border-[var(--border)] rounded-2xl p-8 text-center">
 
-                {/* icon */}
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[var(--navy-700)] flex items-center justify-center text-3xl">
                   🔍
                 </div>
 
-                {/* heading */}
                 <h2 className="font-display text-2xl font-bold text-white mb-2">
                   No Colleges Found
                 </h2>
 
-                {/* description */}
                 <p className="text-[var(--text-muted)] text-sm leading-relaxed mb-6">
                   We couldn't find any colleges matching your current filters.
                   Try adjusting your search or clearing filters.
                 </p>
 
-                {/* buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
 
                   <button
@@ -348,21 +366,79 @@ export default function CollegesPage() {
 
           ) : (
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
 
-              {filtered.map(college => (
+                {paginatedColleges.map(college => (
 
-                <CollegeCard
-                  key={college.id}
-                  college={college}
-                  onCompareToggle={toggleCompare}
-                  isInCompare={compareList.includes(college.id)}
-                  canAdd={compareList.length < 3}
-                />
+                  <CollegeCard
+                    key={college.id}
+                    college={college}
+                    onCompareToggle={toggleCompare}
+                    isInCompare={compareList.includes(college.id)}
+                    canAdd={compareList.length < 3}
+                  />
 
-              ))}
+                ))}
 
-            </div>
+              </div>
+
+              {/* pagination */}
+              {filtered.length > collegesPerPage && (
+
+                <div className="flex items-center justify-center gap-2 mt-10 flex-wrap">
+
+                  {/* previous */}
+                  <button
+                    onClick={() =>
+                      setCurrentPage(prev => Math.max(prev - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 rounded-xl text-sm transition-colors ${
+                      currentPage === 1
+                        ? "bg-[var(--navy-700)] text-[var(--text-muted)] cursor-not-allowed"
+                        : "bg-[var(--navy-700)] text-white hover:bg-[var(--amber)] hover:text-[var(--navy)]"
+                    }`}
+                  >
+                    Previous
+                  </button>
+
+                  {/* page numbers */}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`w-10 h-10 rounded-xl text-sm font-medium transition-colors ${
+                        currentPage === page
+                          ? "bg-[var(--amber)] text-[var(--navy)]"
+                          : "bg-[var(--navy-700)] text-white hover:bg-[var(--amber)] hover:text-[var(--navy)]"
+                      }`}
+                    >
+                      {page}
+                    </button>
+
+                  ))}
+
+                  {/* next */}
+                  <button
+                    onClick={() =>
+                      setCurrentPage(prev => Math.min(prev + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 rounded-xl text-sm transition-colors ${
+                      currentPage === totalPages
+                        ? "bg-[var(--navy-700)] text-[var(--text-muted)] cursor-not-allowed"
+                        : "bg-[var(--navy-700)] text-white hover:bg-[var(--amber)] hover:text-[var(--navy)]"
+                    }`}
+                  >
+                    Next
+                  </button>
+
+                </div>
+
+              )}
+            </>
 
           )}
 
