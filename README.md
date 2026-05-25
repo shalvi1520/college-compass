@@ -6,7 +6,7 @@ This project was developed as part of the Frontend Engineer assignment for the A
 
 Live Demo
 
-https://your-vercel-link.vercel.app
+https://college-compass-lac.vercel.app/
 
 Overview
 
