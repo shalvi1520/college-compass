@@ -1,36 +1,173 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+CollegeCompass
 
-## Getting Started
+CollegeCompass is a modern college discovery platform designed for engineering aspirants to explore, compare, and analyze engineering colleges across India.
 
-First, run the development server:
+This project was developed as part of the Frontend Engineer assignment for the AI Signal internship selection process.
+
+Live Demo
+
+https://your-vercel-link.vercel.app
+
+Overview
+
+The platform helps students:
+- discover engineering colleges
+- compare institutions side-by-side
+- explore placement statistics and fee structures
+- analyze rankings and cutoff trends
+- use filtering and search to narrow choices
+
+The focus of the project was building a polished, scalable, and responsive frontend experience using modern web technologies.
+
+Features
+
+College Discovery
+- Browse engineering colleges in a responsive card layout
+- View rankings, placements, fees, and ratings
+- Dedicated detail pages for each college
+
+Search and Filtering
+- Search colleges by name, city, or short name
+- Filter by:
+  - college type
+  - state
+  - rating
+- Sort colleges by:
+  - NIRF ranking
+  - fees
+  - placement packages
+  - ratings
+
+College Detail Pages
+- Detailed overview section
+- Placement statistics
+- Top recruiters
+- Programs offered
+- Cutoff information
+- Quick facts section
+- Breadcrumb navigation
+
+College Comparison
+- Compare up to three colleges
+- Side-by-side comparison workflow
+- Sticky compare bar for better usability
+
+Predictor
+- Rank-based college exploration interface
+- Categorized recommendation workflow
+
+User Experience Enhancements
+- Responsive design for all screen sizes
+- Empty state handling
+- Client-side pagination
+- Reusable component architecture
+- Smooth UI interactions
+
+Tech Stack
+
+Frontend
+- Next.js 16
+- React
+- TypeScript
+- Tailwind CSS
+
+UI Libraries
+- Lucide React
+
+Deployment
+- Vercel
+
+Project Structure
+
+```bash
+src
+│
+├── app
+│   ├── colleges
+│   │   ├── [id]
+│   │   │   └── page.tsx
+│   │   └── page.tsx
+│   │
+│   ├── compare
+│   ├── predictor
+│   └── page.tsx
+│
+├── components
+│   ├── colleges
+│   ├── layout
+│   └── ui
+│
+├── data
+│   └── colleges.ts
+│
+├── lib
+│   └── utils.ts
+│
+├── styles
+│
+└── types
+    └── index.ts
+```
+
+Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/college-compass.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd college-compass
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open in browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Engineering Decisions
 
-## Learn More
+Next.js App Router
+The project uses the Next.js App Router architecture for scalable routing and modern React patterns.
 
-To learn more about Next.js, take a look at the following resources:
+TypeScript
+TypeScript was used to improve maintainability, enforce type safety, and reduce runtime errors.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Client-side Pagination
+Pagination was implemented to improve scalability and rendering performance while keeping the architecture flexible for future API integration.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Responsive Architecture
+The UI was designed mobile-first with responsive layouts to ensure usability across devices.
 
-## Deploy on Vercel
+Future Improvements
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Potential future enhancements include:
+- saved colleges
+- recently viewed colleges
+- authentication
+- backend APIs
+- database integration
+- real-time cutoff updates
+- AI-based recommendations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+GitHub:
+https://github.com/YOUR_USERNAME
