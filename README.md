@@ -114,7 +114,7 @@ Installation
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/college-compass.git
+git clone https://github.com/shalvi1520/college-compass
 ```
 
 Navigate to the project directory:
@@ -169,5 +169,4 @@ Potential future enhancements include:
 
 
 
-GitHub:
-https://github.com/YOUR_USERNAME
+
